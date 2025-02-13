@@ -33,102 +33,36 @@ table(chp$smoke, useNA = 'ifany')
 # Summarise the data: continuous variable
 
 # LDL
-summary(chp$ldl)
-quantile(chp$ldl)
+summary(chp$ldl)quantile(chp$ldl)
+
 quantile(chp$ldl,na.rm = TRUE)
 # Checking the distribution of the variable (using histogram)
 hist(chp$ldl,breaks = 100,xlab="LDL Cholesterol (mmol/L)", main="Histogram of LDL Cholesterol")
 # Checking for outliers (using box plot)
-boxplot(chp$ldl,ylab="LDL Cholesterol (mmol/L)", main="Boxplot of LDL Cholesterol",col = 'grey')
-
+boxplot(chp$ldl,ylab="LDL Cholesterol (mmol/L)", main="Histogram of "
 # ++++++++ In-class exercise 1 ++++++++ #
 # Summarize the data for the following continuous variables:
 # (i) Age
 # (ii) BMI
 # Do you observe any missing/erroneous values?
-  
-# (i) Age
-summary(chp$age)
-quantile(chp$age,na.rm = TRUE)
+summary(chp$ldl)
+quantile(chp$ldl)
+quantile(chp$ldl,na.rm = TRUE)
 # Checking the distribution of the variable (using histogram)
-hist(chp$age,breaks = 100,xlab="Age (in years)", main="Histogram of Age",col = 'pink')
-# Checking for outliers (using box plot)
-boxplot(chp$age,ylab="Age (in years)", main="Boxplot of Age",col = 'grey')
 
-
-# (ii) BMI
-summary(chp$bmi)
-quantile(chp$bmi,na.rm = TRUE)
-# Checking the distribution of the variable (using histogram)
-hist(chp$bmi,breaks = 100,xlab="BMI", main="Histogram of BMI")
-# Checking for outliers (using box plot)
-boxplot(chp$bmi,ylab="BMI", main="Boxplot of BMI",col = 'grey')
-
-
-
-
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
-
-# Summarise the data: categorical variable
-
-# Gender
-
-# build a (one-way) contingency table of the counts at each combination of factor levels 
-table(chp$gender, useNA = 'ifany')
-# Use the “prop.table” function to get the proportions
-prop.table(table(chp$gender, useNA = 'ifany'))
-
-
-# ++++++++ In-class exercise 2 ++++++++ #
-# Summarize the data for the following categorical variables:
-# (i) Smoking status
-# (ii) Ethnicity
-# Do you observe any missing/erroneous values?
-  
-
-# (i) Smoking status
-
-
-
-
-# (ii) Ethnicity
-
-
-
-
-# ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
-
-##############################################################################
-
-
-
-
-
-############# Clean and prepare your data ############# 
-
-# Data cleaning for continuous variable: LDL Cholesterol 
-chp$ldl_drop = chp$ldl
-chp$ldl_drop[chp$ldl_drop<1 | chp$ldl_drop>10]
-chp$ldl_drop[chp$ldl_drop<1 | chp$ldl_drop>10] = NA
-summary(chp$ldl_drop)
-
-# ++++++++ In-class exercise 3 ++++++++ #
-# Data cleaning for the following continuous variables:
-# (i) Age
 # (ii) BMI
 
 # (i) Data cleaning for continuous variable: Age
-
-
-
-
+chp$age_drop = chp$age
+chp$age_drop[chp$age_drop<40 | chp$age_drop>100]
+chp$age_drop[chp$age_drop<40 | chp$age_drop>100] = NA
+summary(chp$age_drop)
 
 # (ii) Data cleaning for continuous variable: BMI
-
-
-
-
+chp$bmi_drop = chp$bmi
+chp$bmi_drop[chp$bmi_drop>50]
+chp$bmi_drop[chp$bmi_drop>50] = NA
+summary(chp$bmi_drop)
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 
@@ -149,17 +83,17 @@ table(chp$gender, useNA = 'ifany')
 # (ii) Ethnicity
 
 # (i) Smoking status
-
-
-
-
+table(chp$smoke, useNA = 'ifany')
+chp$smoke[chp$smoke %in% "zsmoker"]
+chp$smoke[chp$smoke %in% "zsmoker"] = NA
+table(chp$smoke, useNA = 'ifany')
 
 
 # (ii) Ethnicity
-
-
-
-
+table(chp$ethnicity, useNA = 'ifany')
+chp$ethnicity[chp$ethnicity %in% "chinese"]
+chp$ethnicity[chp$ethnicity %in% "chinese"] = "Chinese"
+table(chp$ethnicity, useNA = 'ifany')
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ #
 

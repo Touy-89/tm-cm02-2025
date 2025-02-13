@@ -5,8 +5,11 @@
 
 # Because the file is an .xls file, you will need the read_xls function in the readxl package (which you will first need to install). 
 
+
 # Install the readxl package
 install.packages("readxl") # you will need internet for this 
+
+
 
 # After successful installation, load the readxl package
 library(readxl) 
@@ -119,12 +122,20 @@ summary(chp$ldl_drop)
 # (ii) BMI
 
 # (i) Data cleaning for continuous variable: Age
+chp$age_drop = chp$age
+chp$age_drop[chp$age_drop<40 | chp$age_drop>100]
+chp$age_drop[chp$age_drop<40 | chp$age_drop>100] = NA
+summary(chp$age_drop)
 
 
 
 
 
 # (ii) Data cleaning for continuous variable: BMI
+chp$bmi_drop = chp$bmi
+chp$bmi_drop[chp$bmi_drop>50]
+chp$bmi_drop[chp$bmi_drop>50] = NA
+summary(chp$bmi_drop)
 
 
 
@@ -149,6 +160,11 @@ table(chp$gender, useNA = 'ifany')
 # (ii) Ethnicity
 
 # (i) Smoking status
+table(chp$smoke, useNA = 'ifany')
+chp$smoke[chp$smoke %in% "zsmoker"]
+chp$smoke[chp$smoke %in% "zsmoker"] = NA
+table(chp$smoke, useNA = "ifany")
+
 
 
 
@@ -156,7 +172,10 @@ table(chp$gender, useNA = 'ifany')
 
 
 # (ii) Ethnicity
-
+table(chp$ethnicity, useNA = 'ifany')
+chp$ethnicity[chp$ethnicity %in% "chinese"]
+chp$ethnicity[chp$ethnicity %in% "chinese"] = "Chinese"
+table(chp$ethnicity, useNA = 'ifany')
 
 
 
@@ -209,13 +228,17 @@ chp$overweight[chp$bmi_drop >= 25] = 1
 summary(chp$bmi_drop)
 summary(chp$bmi_drop[chp$overweight %in% 0])
 summary(chp$bmi_drop[chp$overweight %in% 1])
+summary(chp$bmi_drop[chp$overweight %in% 'Male'])
+summary(chp$bmi_drop[chp$overweight %in% 'Fema'])
+summary(chp$bmi_drop[chp$cvd %in% 0])
+summary(chp$bmi_drop[chp$cvd %in% 1])
 
 
 # Store this file as “chp_processed_data”
 chp_processed_data = chp
 
-
 # Delete the observations with missing and/or erroneous data
+
 
 # Identify the rows with missing and/or erroneous data using the "which" function 
 problemrows = which(is.na(chp$age_drop) | is.na(chp$gender) | is.na(chp$bmi_drop) | is.na(chp$ethnicity) | is.na(chp$smoke) | is.na(chp$cvd) | is.na(chp$ldl_drop))
@@ -235,5 +258,4 @@ save(chp,file = 'data/chp_cleaned.rdata')
 
 # Save cleaned data: as RDS file (easy to load this file into R for further analysis)
 saveRDS(chp,file = 'data/chp_cleaned.rds')
-
 
